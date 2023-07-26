@@ -1,0 +1,76 @@
+[gd_scene load_steps=5 format=3 uid="uid://jltyuy1jpi47"]
+
+[ext_resource type="Script" path="res://control.gd" id="1_fetmp"]
+[ext_resource type="Shader" path="res://control.gdshader" id="2_a281a"]
+[ext_resource type="VideoStream" path="res://video.ogv" id="4_xu6hy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_67kgm"]
+shader = ExtResource("2_a281a")
+shader_parameter/chroma_key_color = Color(0, 1, 0, 1)
+shader_parameter/pickup_range = 0.3
+shader_parameter/fade_amount = 0.1
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fetmp")
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="."]
+material = SubResource("ShaderMaterial_67kgm")
+layout_mode = 0
+offset_top = 3.0
+offset_right = 1157.0
+offset_bottom = 644.0
+stream = ExtResource("4_xu6hy")
+autoplay = true
+expand = true
+
+[node name="HSlider" type="HSlider" parent="."]
+layout_mode = 0
+offset_left = 835.0
+offset_top = 460.0
+offset_right = 1089.0
+offset_bottom = 546.0
+max_value = 1.0
+step = 0.01
+
+[node name="HSlider2" type="HSlider" parent="."]
+layout_mode = 0
+offset_left = 835.0
+offset_top = 520.0
+offset_right = 1089.0
+offset_bottom = 606.0
+max_value = 1.0
+step = 0.01
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="."]
+layout_mode = 0
+offset_left = 835.0
+offset_top = 358.0
+offset_right = 1103.0
+offset_bottom = 453.0
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 841.0
+offset_top = 468.0
+offset_right = 946.0
+offset_bottom = 494.0
+text = "Pickup range:"
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 843.0
+offset_top = 533.0
+offset_right = 948.0
+offset_bottom = 559.0
+text = "Fade:"
+
+[connection signal="finished" from="VideoStreamPlayer" to="." method="_on_video_stream_player_finished"]
+[connection signal="value_changed" from="HSlider" to="." method="_on_h_slider_value_changed"]
+[connection signal="value_changed" from="HSlider2" to="." method="_on_h_slider_2_value_changed"]
+[connection signal="color_changed" from="ColorPickerButton" to="." method="_on_color_picker_button_color_changed"]
